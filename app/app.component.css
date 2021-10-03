@@ -1,0 +1,33 @@
+span{
+  color: red;
+}
+
+
+.product_table{
+  width: 50%;
+  margin-top: 15px;
+}
+
+.div_coment_group{
+  margin-top: 15px;
+}
+
+.red{
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+.blue{
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+}
+
+.div_red_green{
+  width: 100px;
+  height: 100px;
+}
+.h2_From{
+  color: darkmagenta;
+}
+

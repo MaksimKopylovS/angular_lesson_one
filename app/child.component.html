@@ -1,0 +1,20 @@
+<h1 class="title_wilcome">Welcome Child_Component - {{name}}</h1>
+<!--Добовление в дочерний компонент свойств из родительского -->
+<ng-content></ng-content>
+<h1>Welcom Student {{studentName}}</h1>
+<!--Передача параметра из родительского компонента в дочерни
+ и редактирование этого параметра
+ в методах дочернего компонента с последующим возвратом  -->
+<h1>Student Count {{countS}}</h1>
+
+<hr>
+<!--Привязка к событиям дочерненго компонента
+ Передаёт событие change по нажатию на кнопку родителькому компоненту
+ для этого используется событие EventEmiter, при этом свойство onChange
+ должно быть Output-->
+<button (click)="change(true)">+</button>
+<button (click)="change(false)">-</button>
+
+<hr>
+<!--Двустороння присвязка между свойствами главного и дочернего компонента-->
+<input [ngModel]="userName" (ngModelChange)="onNameChange($event)"/>
