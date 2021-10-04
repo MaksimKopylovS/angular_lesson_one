@@ -31,3 +31,17 @@ span{
   color: darkmagenta;
 }
 
+.div_data_comp{
+  margin-top: 15px;
+  background-color: azure;
+}
+.verdanaFont{
+  margin-top: 20px;
+  font-size: 13px;
+  font-family: Verdana, serif;
+}
+.segoePrintFont{
+  font-size: 22px;
+  font-family: "Segoe Print", serif;
+  color: fuchsia;
+}

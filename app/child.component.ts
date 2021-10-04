@@ -1,4 +1,17 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  DoCheck,
+  AfterContentInit,
+  AfterContentChecked,
+  AfterViewChecked,
+  AfterViewInit,
+  Output,
+  SimpleChanges, ContentChild, ElementRef
+} from '@angular/core';
 
 @Component({
   selector: 'child-comp',
@@ -6,8 +19,21 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   styleUrls: ['./child.component.css']
 })
 
-export class ChildComponent{
-  name="Джордж";
+export class ChildComponent implements OnInit,
+  OnChanges,
+  AfterContentInit,
+  AfterContentChecked,
+  AfterViewChecked,
+  AfterViewInit{
+
+  conunterShablon: number = 0;
+
+  @ContentChild("headerContent",{
+    static:false
+  })
+  header: ElementRef|undefined;
+
+  @Input() name: string="Джон";
   @Input() studentName: string = "";
   countS:number = 0;
   @Input()
@@ -30,11 +56,59 @@ export class ChildComponent{
     this.onChanged.emit(cunt);
   }
 
+
   @Input() userName:string = "";
   @Output() userNameChange = new EventEmitter<string>();
-  onNameChange(userName: string){
-    this.userName = userName;
-    this.userNameChange.emit(userName);
+  onNameChange(model: string){
+    this.userName = model;
+    this.userNameChange.emit(model);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    for(let propName in changes){
+      let chng = changes[propName];
+      let cur = JSON.stringify(chng.currentValue);
+      let prev = JSON.stringify(chng.previousValue);
+      this.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
+    }
+  }
+
+  ngOnInit(): void {
+    this.log(`onInit`);
+  }
+
+  private log (msg:string){
+    console.log(msg);
+  }
+  ngAfterContentChecked(): void {
+    console.log(`ngAfterContentChecked`);
+  }
+
+  ngAfterContentInit(): void {
+    console.log(`ngAfterContentInit`);
+  }
+
+  ngAfterViewChecked(): void {
+    console.log(`ngAfterViewChecked`);
+  }
+
+  ngAfterViewInit(): void {
+    console.log(`ngAfterViewInit`);
+  }
+
+  incrimentconunterShablon(){
+    this.conunterShablon++;
+  }
+
+  decrimentconunterShablon(){
+    this.conunterShablon--;
+  }
+
+  changeContentChild(){
+    if(this.header!==undefined){
+      console.log(this.header.nativeElement.textContent)
+      this.header.nativeElement.textContent = "Пёрт Семенёч";
+    }
   }
 
 }

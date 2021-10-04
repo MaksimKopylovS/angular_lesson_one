@@ -92,10 +92,19 @@
 </label>
 
 <hr>
+<h1>child - Начало</h1>
 <!--Добовление дочернего компонента -->
 <!--Добовление в дочерний элемент свойств рдительскоро и их значений-->
-<child-comp [(userName)]="nameUser" (onChanged)="onChanged($event)" [count]="count" [studentName]="student"><h2 class="h2_From">Hello From App-Component</h2></child-comp>
+<child-comp [name]="name"
+            [(userName)]="nameUser"
+            (onChanged)="onChanged($event)"
+            [count]="count" [studentName]="student"
+            #conunterShablon>
+  <h2 class="h2_From">Hello From App-Component</h2>
+  <h2 #headerContent>Добро Пожаловать {{nameContentChild}}!</h2>
+</child-comp>
 
+<h1>child - Конец</h1>
 <!--Передача параметров от главного элемента дочернему через сеттер-->
 <input type="number" [(ngModel)]="count">
 
@@ -108,3 +117,51 @@
 <hr>
 <!--Двустороння присвязка между свойствами главного и дочернего компонента-->
 <div>Выбранное Имя: {{nameUser}}</div>
+
+<!--ngOnChanges-->
+<input type="text" [(ngModel)]="name"/>
+<input type="number" [(ngModel)]="age"/>
+
+
+<!--//ШАблонная переменная привязывает к полю #Шаблона в html
+данную переменную можно использовать внуть html,
+внутри шаблонаКласса можно выполнять опирации над переменной
+которые будут отображатся в html, можно использовать только в нутри шаблона
+для использования шаблоных переменных, внутри дрогого компонента
+нужно добовлять ViewChild-->
+<p #shablonNames>{{shablonName}}</p>
+<p>{{shablonNames.textContent}}</p>
+<input type="text" [(ngModel)]="shablonName">
+
+
+<!--Изменение дочерней  шаблонной переменной через оснвной шаблон-->
+
+<button (click)="incrimentconunterShablon()">+</button>
+<button (click)="decrimentconunterShablon()">-</button>
+
+
+<!--Соединение шаблоннай переменной с переменной компонента-->
+<h3 #elementTextShablon>{{name}}</h3>
+<h3>{{elementTextShablon.textContent}}</h3>
+<button (click)="change()">Изменить</button>
+
+<!--Импортирование дополнительных модулей на примере DataModule-->
+
+<div class="div_data_comp">
+  <data-comp></data-comp>
+</div>
+
+<!--
+Компоненты: компонент по сути также является директивой, а декоратор @Component расширяет возможности декоратора @Directive с помощью добавления функционала по работе с шаблонами.
+
+Атрибутивные: они изменяют поведение уже существующего элемента, к которому они применяются. Например, ngModel, ngStyle, ngClass
+
+Структурные: они изменяют структуру DOM с помощью добавления, изменения или удаления элементов html. Например, это директивы ngFor и ngIf
+-->
+<!--Дерективa ngClass используются удобного добовления свойств css-->
+<div [ngClass]="{verdanaFont:isVerdana}">
+  <h1>Welcom Directiv</h1>
+  <p [ngClass]="{segoePrintFont:isSegoe}">
+    Angular представляет моддельную структуру приложения
+  </p>
+</div>
