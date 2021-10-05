@@ -45,3 +45,7 @@ span{
   font-family: "Segoe Print", serif;
   color: fuchsia;
 }
+.invisibleee{
+  display: none;
+  color: fuchsia;
+}

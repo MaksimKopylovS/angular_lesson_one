@@ -23,8 +23,8 @@
     </div>
     <div class="form-group">
       <div class="col-md-offset-2 col-md-8">
-<!--        Привязка метода компонента к событию, нужно указыать атрибут в скобкаха чтобы можно было вызвать метод их TS-->
-<!--        вызов метода из HTML в TS-->
+        <!--        Привязка метода компонента к событию, нужно указыать атрибут в скобкаха чтобы можно было вызвать метод их TS-->
+        <!--        вызов метода из HTML в TS-->
         <button class="btn btn-secondary" (click)="addItem(text, price)">Добавить</button>
       </div>
     </div>
@@ -34,7 +34,7 @@
 
     <div class="form-group">
       <div class="col-md-offset-2 col-md-8">
-<!--        Передача данных из HTML сразу в TS-->
+        <!--        Передача данных из HTML сразу в TS-->
         <input class="form-control" [(ngModel)]="id" placeholder="ID товара"/>
       </div>
     </div>
@@ -51,29 +51,29 @@
       </div>
     </div>
 
-</div>
+  </div>
 
 
-<table class="table product_table">
-  <thead class="thead-dark">
-  <tr>
-    <th>Предмет</th>
-    <th>Цена</th>
-    <th>Куплено</th>
-    <th>Описание</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let item of items">
-<!--    В двойныз фигурных скобках указыывается выражение к которому идёт привязка {{выражение}}, указывается значение поля передаваемого и компонентов ангуляр-->
-    <td>{{item.purchase}}</td>
-    <td>{{item.price}}</td>
-    <td><input type="checkbox" [(ngModel)]="item.done"/></td>
-    <td>{{item.info}}</td>
-  </tr>
-  </tbody>
-</table>
-<!-- DOM Привязка свойств  Передача значения атрибуту из TS в Html -->
+  <table class="table product_table">
+    <thead class="thead-dark">
+    <tr>
+      <th>Предмет</th>
+      <th>Цена</th>
+      <th>Куплено</th>
+      <th>Описание</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items">
+      <!--    В двойныз фигурных скобках указыывается выражение к которому идёт привязка {{выражение}}, указывается значение поля передаваемого и компонентов ангуляр-->
+      <td>{{item.purchase}}</td>
+      <td>{{item.price}}</td>
+      <td><input type="checkbox" [(ngModel)]="item.done"/></td>
+      <td>{{item.info}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <!-- DOM Привязка свойств  Передача значения атрибуту из TS в Html -->
 
   <input type="text" [value]="mandala"/>
   <h1>{{name}}</h1>
@@ -165,3 +165,72 @@
     Angular представляет моддельную структуру приложения
   </p>
 </div>
+
+<!--Динамическое изменение стилей -->
+<div [ngClass]="{invisibleee: visibilitys}">
+  <h1>Welcom Dinamic</h1>
+  <p>Angular The Best Worold Federation</p>
+</div>
+<button (click)="toogle()">Toogle</button>
+
+<!--Создание собственных дересктив "Атрибутные дерективы"-->
+
+<hr>
+<div>
+  <h1 bold>Welcom My Directiwe Bold</h1>
+</div>
+<!--Создание собственных дересктив c прослушивание различных событий @HostListener-->
+<div>
+  <h1 hostListener>Welcom My Directiwe HostListener</h1>
+</div>
+
+<!--HostBinding позволяет связать обычное свойство класса со свойством элемента-->
+<div>
+  <h1 hostBind>Welcom My Directiwe HostListener</h1>
+</div>
+
+<!--Отдельное совйство host в дерективе -->
+<div>
+  <h1 hostHost>Welcom My Directiwe HostListener</h1>
+</div>
+
+<!--@HostBinding  Получение параметров в директивах-->
+<div>
+  <h1 HostBindingNew>Welcom My Directiwe HostListener</h1>
+  <p [HostBindingNew]="'28px'" [defaultSize]="'14px'">Angular The Best Worold Federation</p>
+</div>
+
+<hr>
+<!--Структурные директивы ngIf, ngFor, ngSwitch-->
+<div>
+  <h1 hostHost>Welcom My Directiwe StructurDerective</h1>
+  <!--ngIf позволяет удалить либо добавить контент при определённых условиях  -->
+  <p *ngIf="condition">Condition Eight</p>
+  <p *ngIf="!condition">Condition NoWisibal</p>
+  <button (click)="toggleCondition()">ToggleCondition</button>
+</div>
+<hr>
+<!--ng-template позволяет делать опирации выборки через then и else-->
+<div *ngIf="condition; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock><p>Condition Eight</p></ng-template>
+<ng-template #elseBlock><p>Condition NoWisibal</p></ng-template>
+<button (click)="toggleCondition()">ToggleCondition</button>
+<hr>
+<!--ngFor цикл для перебора значений масивы
+при переборе элементом доступен индекс элемента через переменную index которую мы также можем использовать -->
+<ul>
+<li *ngFor="let item of masiv; let i = index">{{i+1}}.{{item}}</li>
+</ul>
+
+<hr>
+<!--ngSwitch в аглуяр с его помошью строится конструкция Switch case-->
+<div [ngSwitch]="countNgSwitch">
+  <ng-template ngSwitchCase="1">{{countNgSwitch * 10}}</ng-template>
+  <ng-template ngSwitchCase="2">{{countNgSwitch * 100}}</ng-template>
+  <ng-template ngSwitchDefault>{{countNgSwitch * 1000}}</ng-template>
+</div>
+<hr>
+<!--Создание собственной дерективый-->
+<p *while="conditionWhile">Параграф Один</p>
+<p *while="!conditionWhile">Параграф Два</p>
+<button (click)="toogleWhile()">ToggleCondition</button>

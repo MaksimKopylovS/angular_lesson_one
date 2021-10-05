@@ -10,6 +10,7 @@ import {
 import {NgModel} from "@angular/forms";
 import {ChildComponent} from "./child.component";
 import {DataComponent} from "./data/data.component";
+import * as buffer from "buffer";
 
 class Item {
 
@@ -74,7 +75,10 @@ export class AppComponent implements OnInit, OnDestroy, OnChanges{
   })
   private counterShablonComponent: ChildComponent|undefined;
   nameContentChild: string = "nameContentChild";
-
+  visibilitys:boolean = true;
+  condition:boolean = true;
+  masiv:string [] = ["Vasy", "Grisha", "Pety", "Seny", "Evpatiy", "Frokl"]
+  countNgSwitch: number = 5;
 
   @ViewChild("elementTextShablon", {
     static:false
@@ -82,6 +86,7 @@ export class AppComponent implements OnInit, OnDestroy, OnChanges{
   nameParagraph: ElementRef|undefined;
   isVerdana: boolean = true;
   isSegoe: boolean = true;
+  conditionWhile: boolean = true;
 
   items: Item[] = [
     new Item("Хлеб", 12, true),
@@ -146,6 +151,18 @@ export class AppComponent implements OnInit, OnDestroy, OnChanges{
       console.log(this.nameParagraph.nativeElement.textContent)
       this.nameParagraph.nativeElement.textContent = "hell";
     }
+  }
+
+  toogle(){
+    this.visibilitys = !this.visibilitys;
+  }
+
+  toggleCondition(){
+    this.condition = !this.condition;
+  }
+
+  toogleWhile(){
+    this.conditionWhile = !this.conditionWhile;
   }
 
 }
