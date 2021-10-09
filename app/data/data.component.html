@@ -1,3 +1,18 @@
 <!--exports - data.module.ts  используется для возможности экспортирования компонента в другие модули-->
 
 <div><h3>{{message}}</h3></div>
+
+
+<!--Добавление ДАта сервиса в Дата компонент и использование их функций основном компоненте
+Для того чтобы один сервис был один и тотже для мнржества компонентов его нужно добаить в основной модуль appmodule
+При этом сервисы должны отсуствовать в остальных компонента иначе они инициализирваотся как новые-->
+<div>
+  <input type="text" [(ngModel)]="itemDataServis">
+  <button (click)="addDataServiceItem(itemDataServis)">AddItem</button>
+
+  <table>
+    <tr *ngFor="let item of itemsDataServis">
+      <td>{{item}}</td>
+    </tr>
+  </table>
+</div>

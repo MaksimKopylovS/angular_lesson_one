@@ -1,4 +1,4 @@
-<label>Введите Имя</label>
+`<label>Введите Имя</label>
 <!--Передача значений из TS в HTML-->
 <input [(ngModel)]="name" placeholder="name">
 <h1><span>Добро пожаловать</span> {{name}}!</h1>
@@ -219,11 +219,12 @@
 <!--ngFor цикл для перебора значений масивы
 при переборе элементом доступен индекс элемента через переменную index которую мы также можем использовать -->
 <ul>
-<li *ngFor="let item of masiv; let i = index">{{i+1}}.{{item}}</li>
+  <li *ngFor="let item of masiv; let i = index">{{i + 1}}.{{item}}</li>
 </ul>
 
 <hr>
 <!--ngSwitch в аглуяр с его помошью строится конструкция Switch case-->
+<!--[ngSwitch]= однонаправленная привязка просто вывод значение из класа компонента-->
 <div [ngSwitch]="countNgSwitch">
   <ng-template ngSwitchCase="1">{{countNgSwitch * 10}}</ng-template>
   <ng-template ngSwitchCase="2">{{countNgSwitch * 100}}</ng-template>
@@ -234,3 +235,299 @@
 <p *while="conditionWhile">Параграф Один</p>
 <p *while="!conditionWhile">Параграф Два</p>
 <button (click)="toogleWhile()">ToggleCondition</button>
+<hr>
+<!--Рабоа с данными из дополнительного компонета DataServic-->
+<div>
+  <!-- [(ngModel)] Двунаправленная привязка к модели, делается для отслеживания изменений элемента  itemDataServis-->
+  <input type="text" [(ngModel)]="itemDataServis">
+  <button (click)="addDataServiceItem(itemDataServis)">AddItem</button>
+
+  <table>
+    <tr *ngFor="let item of itemsDataServis">
+      <td>{{item}}</td>
+    </tr>
+  </table>
+</div>
+
+<hr>
+<!--РАзника между Одноправленной привязкой и двунаправленной-->
+<!--[ngModel]= однонаправленная привязка просто вывод значение из класа компонента-->
+<!-- [(ngModel)] Двунаправленная привязка к модели, делается для отслеживания изменений элемента  itemDataServis-->
+<h1>РАзника между Одноправленной привязкой и двунаправленной</h1>
+<div>
+  <div class="form-group">
+    <label> Название модели</label>
+    <input class="form-control" name="title" [(ngModel)]="title"/>
+  </div>
+  <div class="form-group">
+    <label>Цена</label>
+    <input type="number" class="form-control" name="price" [(ngModel)]="price"/>
+  </div>
+  <div class="form-group">
+    <label>Производитель</label>
+    <select class="form-control" name="company" [(ngModel)]="company">
+      <option *ngFor="let comp of itemsDataServis" [value]="comp">
+        {{comp}}
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default" (click)="addPhones()">Добавить</button>
+  </div>
+</div>
+<div><h3>Добавленне элементы</h3>
+  <ul *ngFor="let p of phones">
+    <li>{{p.title}} ({{p.company}}) - {{p.price}}</li>
+  </ul>
+</div>
+
+<!--Добавление,  создание общей модели phone  -->
+<hr>
+<h1>Добавление, создание общей модели phone</h1>
+<div>
+  <div class="form-group">
+    <label> Название модели</label>
+    <input class="form-control" name="titleM" [(ngModel)]="phone.title"/>
+  </div>
+  <div class="form-group">
+    <label>Цена</label>
+    <input type="number" class="form-control" name="priceM" [(ngModel)]="phone.price"/>
+  </div>
+  <div class="form-group">
+    <label>Производитель</label>
+    <select class="form-control" name="companyM" [(ngModel)]="phone.company">
+      <option *ngFor="let comp of itemsDataServis" [value]="comp">
+        {{comp}}
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default" (click)="addPhone()">Добавить</button>
+  </div>
+</div>
+<div><h3>Добавленне элементы</h3>
+  <ul *ngFor="let p of phones">
+    <li>{{p.title}} ({{p.company}}) - {{p.price}}</li>
+  </ul>
+</div>
+<hr>
+<!--Директива ngModel позволяет определить объект ngModel, который будет связан с опредеоённым элементом ввода-->
+<h1>Директива ngModel позволяет определить объект ngModel, который будет связан с опредеоённым элементом ввода</h1>
+
+<div>
+  <div class="form-group">
+    <label>Название Модели</label>
+    <!--(change)="onTitleChange()" позволяет(проконтролировать изменение моделт) сразу выполнять метод по обработки события например проверка ввода в данное поля,
+!!!!! работает тольок после покидания поля-->
+    <input class="form-control" name="titleO" [(ngModel)]="phone.title" #phoneTitle="ngModel"
+           (change)="onTitleChange()"/>
+  </div>
+  <div class="form-group">
+    <label>Цена</label>
+    <!--    (ngModelChange)="onTitleModelChange()" Выполняте проверку на момент ввода в поля не покидая поля-->
+    <input type="number" class="form-control" name="priceO" [(ngModel)]="phone.price" #phonePrice="ngModel"
+           (ngModelChange)="onTitleModelChange()"/>
+  </div>
+  <div class="form-group">
+    <label>Производитель</label>
+    <select class="form-control" name="companyO" [(ngModel)]="phone.company" #phoneCompany="ngModel">
+      <option *ngFor="let comp of itemsDataServis" [value]="comp">
+        {{comp}}
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default" (click)="addPhoneNgModel(phoneTitle, phonePrice, phoneCompany)">Добавить</button>
+  </div>
+  <div>
+    <p>{{phoneTitle.name}} : {{phoneTitle.model}} </p>
+    <p>{{phonePrice.name}} : {{phonePrice.model}} </p>
+    <p>{{phoneCompany.name}} : {{phoneCompany.model}} </p>
+  </div>
+</div>
+`
+
+<!--Сотояние модели-->
+<hr>
+<h1>Сотояние модели</h1>
+<!--
+ng-untouched - работает в том случае если элемент ввода еще не получал фокус, то устанавливается класс ng-untouched.
+ng-touched работает в том случае если поле ввода уже получало фокус, к нему применяется класс ng-touched.
+При этом получение фокуса не обязательно должно сопровождаться изменением значения в этом поле.
+
+ng-dirty = устанавливается если первоначальное значение в поле ввода было изменено.
+ng-pristine - устанавливается если если  значение не изменялось с момента загрузки страницы,
+
+ng-valid - применяется если значение в поле ввода корректно,
+ng-invalid - применяется если значение некорректно,
+
+required: требует обязательного ввода значения
+
+pattern: задает регулярное выражение, которому должны соответствовать вводимые данные
+-->
+<div>
+  <div class="form-group">
+    <label>Имя</label>
+    <input class="form-control" name="name" [(ngModel)]="user.name" #nameUsers="ngModel" required/>
+    <div [hidden]="nameUsers.valid || nameUsers.untouched" class="alert alert-info">
+      Не указано имя
+    </div>
+  </div>
+
+  <div class="form-group">
+
+    <label>Email</label>
+    <input class="form-control" name="email" [(ngModel)]="user.email" #emailUsers="ngModel"
+           required pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"/>
+    <!--    Если hidden = true это означает что блок div скрыт,  если false - тогда появится-->
+    <div [hidden]="emailUsers.valid || emailUsers.untouched" class="alert alert-danger">
+      Некорректный email
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Телефон</label>
+    <input class="form-control" name="phone" [(ngModel)]="user.phone" #phoneUsers="ngModel"
+           required pattern="[0-9]{10}"/>
+    <!--    Номер телефона водится без доп. символов, только  10 цифр -->
+    <div [hidden]="phoneUsers.valid || phoneUsers.untouched" class="alert alert-danger">
+      Некорректный телефон
+    </div>
+  </div>
+  <!--Кнопка работать не будет до тех пор пока не буду введены коректные данные в поля-->
+  <div class="form-group">
+    <button [disabled]="nameUsers.invalid || emailUsers.invalid || phoneUsers.invalid" class="btn btn-default"
+            (click)="addUser()">Добавить
+    </button>
+  </div>
+</div>
+
+<!--Работа с формами директива NgForm
+Все элементы ввода помещаются с специальные формат
+Данный подход называется Template-Driven, который концентрируется вокруг шаблона компонента,
+в шаблоне компонента к элементам html применяются директивы ngModel и NgForm, правила валидации задаются с помошью
+атрибутов required и pattern;
+<form>
+
+Деректива myForm инкапсулирует все элементы формы к которым применяется директива ngModel,
+и позволяет получить доступ к состоянию этих объектов.
+-->
+<h1>Работа с формами директива NgForm</h1>
+<form #myForm="ngForm" novalidate>
+  <div class="form-group">
+    <label>Имя</label>
+    <input class="form-control" name="name" [(ngModel)]="nameModel" required/>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input class="form-control" name="email" [(ngModel)]="emailModel" required/>
+  </div>
+  <div class="form-group">
+    <label>Phone</label>
+    <input class="form-control" name="phone" [(ngModel)]="phoneModel" required pattern="[0-9]{10}"/>
+  </div>
+  <div class="form-group">
+    <button [disabled]="myForm.invalid" class="btn btn-default" (click)="submit(myForm)">Добавить</button>
+  </div>
+</form>
+<div>Имя: {{myForm.value.name}}</div>
+<div>Email: {{myForm.value.email}}</div>
+<div>Phone: {{myForm.value.phone}}</div>
+
+<!--Отправка формы в TS с помошью дерективы ngSUbmit-->
+<h1>Отправка формы в TS с помошью дерективы ngSUbmi</h1>
+<form #myFormSubmit="ngForm" novalidate (ngSubmit)="submitSubmit(myFormSubmit)">
+  <div class="form-group">
+    <label>Имя</label>
+    <input class="form-control" name="name" [(ngModel)]="nameSubmit" required/>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input class="form-control" name="email" [(ngModel)]="emailSubmit" required/>
+  </div>
+  <div class="form-group">
+    <label>Phone</label>
+    <input class="form-control" name="phone" [(ngModel)]="phoneSubmit" required pattern="[0-9]{10}"/>
+  </div>
+  <div class="form-group">
+    <input type="submit" [disabled]="myFormSubmit.invalid" class="btn btn-default" value="Отправить"/>
+  </div>
+</form>
+<div>Имя: {{myFormSubmit.value.name}}</div>
+<div>Email: {{myFormSubmit.value.email}}</div>
+<div>Phone: {{myFormSubmit.value.phone}}</div>
+
+<!--Использование рeактивных форм, для отображения не котектного ввода в поле, альтернативный подход Reactive Forms-->
+<h1>Использование рeактивных форм для отображения не котектного ввода в поле, альтернативный подход Reactive Forms</h1>
+<form [formGroup]="myFormReactive" novalidate (ngSubmit)="submitReactive()">
+
+  <div class="form-group">
+    <label>Имя</label>
+    <input class="form-control" name="name" formControlName="userName">
+    <div class="alert alert-danger"
+         *ngIf="myFormReactive.controls['userName'].invalid && myFormReactive.controls['userName'].touched">
+      Некоректное имя
+    </div>
+  </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input class="form-control" name="email" formControlName="userEmail">
+      <div class="alert alert-danger"
+           *ngIf="myFormReactive.controls['userEmail'].invalid && myFormReactive.controls['userEmail'].touched">
+        Некоректный email
+      </div>
+    </div>
+
+<!--    ДОбавление масива телефоных номеров -->
+  <h1>ДОбавление масива телефоных номеров</h1>
+  <div formArrayName="userPhone">
+    <div class="form-group" *ngFor="let phone of getFormsControls()['controls']; let i = index">
+      <label>Телефон {{i}}</label>
+      <input class="form-control" name="phone" formControlName="{{i}}">
+    </div>
+    <div class="alert alert-danger"
+         *ngIf="myFormReactive.controls['userPhone'].invalid && myFormReactive.controls['userPhone'].touched">
+      Некоректный Телефон
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default" (click)="addPhoneMass()">
+      Добавить телефон
+    </button>
+  </div>
+    <div class="form-group">
+      <button class="btn btn-default" [disabled]="myFormReactive.invalid">
+        Отправить
+      </button>
+    </div>
+</form>
+
+<!--HTTP взаимодейатвие с сервером HttpClient и отправка запросов-->
+<!--Нужно в package.json добавить в зависимости @angular/common-->
+<!--в appModule нужно добавить HttpClientModule-->
+<br>
+<h1>HTTP взаимодейатвие с сервером HttpClient и отправка запросов</h1>
+<div>
+  <p> Имя Пользователя: {{userHttp?.name}}</p>
+  <p>Возраст пользователя: {{userHttp?.age}}</p>
+</div>
+
+<div>
+  <p> Имя Пользователя: {{userHttpService?.name}}</p>
+  <p>Возраст пользователя: {{userHttpService?.age}}</p>
+</div>
+
+<!--Получение JSON массива-->
+<h1>Получение JSON массива</h1>
+
+  <ul>
+    <li *ngFor="let u of usersService">
+      <p>Имя Пользователя: {{u?.name}}</p>
+      <p>Возраст Пользователя: {{u?.age}}</p>
+    </li>
+  </ul>
+
+
+<!--Объект Observable и Библиотека RxJS  - для работы в pacckage.json нужно подключить библиотеку rxjs-->
+
